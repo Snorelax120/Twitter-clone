@@ -1,10 +1,23 @@
 import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose"
+
 const app = express();
 
-app.get('/', (req,res) =>{
-    res.send("Hello!!");
-})
+dotenv.config();
+
+const connect = () =>{
+    mongoose.connect(process.env.MONGO)
+    .then(()=> {
+        console.log("Connected to mongodb database");
+    })
+    .catch((err)=>{
+        throw err;
+    });
+
+}
 
 app.listen(8000, () => {
+    connect();
     console.log("Listening to port 8000");
 })
